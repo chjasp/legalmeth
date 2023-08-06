@@ -1,2 +1,5 @@
 langchain
 pypdf
+tiktoken
+pinecone-client
+cohere
