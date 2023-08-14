@@ -3,3 +3,6 @@ pypdf
 tiktoken
 pinecone-client
 cohere
+python-dotenv
+promptwatch
+chainlit
