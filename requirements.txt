@@ -6,3 +6,5 @@ cohere
 python-dotenv
 promptwatch
 chainlit
+flask
+Jinja2
