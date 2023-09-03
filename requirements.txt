@@ -1,10 +1,11 @@
 langchain
 pypdf
 tiktoken
-pinecone-client
-cohere
 python-dotenv
 promptwatch
 chainlit
 flask
-Jinja2
+SQLAlchemy
+cloud-sql-python-connector[pg8000]
+transformers
+torch

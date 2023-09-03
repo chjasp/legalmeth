@@ -112,10 +112,8 @@ body {
     margin-left: auto;
 }
 
-/* FOOTER */
-.chatbox__footer {}
+/* MESSAGES */
 
-/* Messages */
 .chatbox__messages {
     padding: 0 20px;
 }

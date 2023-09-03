@@ -40,8 +40,10 @@ class Chatbox {
         })
             .then(r => r.json())
             .then(r => {
-                let msg2 = { name: "Sam", message: r.answer };
-                this.messages.push(msg2);
+                r.matches.forEach(match => {
+                    let msg2 = { name: "Sam", message: match.caption };
+                    this.messages.push(msg2);
+                });
                 this.updateChatText(chatbox);
                 textField.value = "";
             }).catch((error) => {
