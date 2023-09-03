@@ -2,3 +2,7 @@ google-api-python-client
 google-auth
 google-auth-httplib2
 google-auth-oauthlib
+youtube_transcript_api
+cloud-sql-python-connector[pg8000]
+torch
+transformers
