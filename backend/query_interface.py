@@ -1,20 +1,25 @@
+# Utils
+import os
+import torch
+from dotenv import load_dotenv
+
 # DB connection
 from sqlalchemy import text
-
-import torch
 from transformers import AutoTokenizer, AutoModel
 from backend.db_interface import DatabaseInterface
 
-project_id = "steam-378309"
-region = "europe-west3"
-instance_name = "legalm"
+load_dotenv()
 
-DB_NAME = "pubmed"
-DB_USER = "postgres"
-DB_PASS = "bdpass"
-DB_PORT = "5432"
+PROJECT_ID = "steam-378309"
+REGION = "europe-west3"
+INSTANCE_NAME = os.environ.get("INSTANCE_NAME")
 
-INSTANCE_CONNECTION_NAME = f"{project_id}:{region}:{instance_name}"
+DB_NAME = os.environ.get("DB_NAME")
+DB_USER = os.environ.get("DB_USER")
+DB_PASS = os.environ.get("DB_PASS")
+DB_PORT = os.environ.get("DB_PORT")
+
+INSTANCE_CONNECTION_NAME = f"{PROJECT_ID}:{REGION}:{INSTANCE_NAME}"
 print(f"Your instance connection name is: {INSTANCE_CONNECTION_NAME}")
 
 db_interface = DatabaseInterface(INSTANCE_CONNECTION_NAME, DB_USER, DB_PASS, DB_NAME)
