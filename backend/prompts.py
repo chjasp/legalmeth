@@ -8,16 +8,14 @@ def load_query_gen_prompt():
     """
 
 
-def load_spark_prompt():
-    return """You are a health advisor that has access to scientific studies.
-    Sections from studies that are most relevant to a user's question are
+def load_hlp_prompt():
+    return """You are a health advisor that has access to captions from many episodes of a health podcast.
+    Captions that are potentially relevant to a user's question are
     referenced below (see "Source"). For your answer to the user's question try 
-    to reference those vetted sources.
+    to reference those vetted sources. If the sources are not relevant, ignore them and explicitly state: "No podcast references considered."
     Question: {question}
     Source:
     ---------------------
-        {summaries}
+        {snippets}
     ---------------------
-Chat History:
-{chat_history}
 """

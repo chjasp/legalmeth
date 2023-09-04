@@ -1,10 +1,9 @@
 *,
 html {
-    --blue1: #011C26;
-    --blue2: #025159;
-    --blue3: #08A696;
-    --blue4: #26FFDF;
-    --blue4shadow: 0px 10px 15px rgba(38, 255, 223, 0.1);
+    --grey: #1F1F1F;
+    --blue: #0070F8;
+    --purple: #7E55F8;
+    --blueshadow: 0px 10px 15px rgba(0, 112, 248, 0.1);
 }
 
 body {
@@ -13,22 +12,22 @@ body {
     font-size: 100%;
     margin: 0;
     padding: 0;
-    background: var(--blue1);
-    color: var(--blue4);
+    background: var(--grey);
+    color: var(--blue);
 }
 
 .navbar {
     position: relative;
     width: 100vw;
     height: 10vh;
-    background: var(--blue1);
+    background: var(--grey);
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .navbar__title {
-    color: var(--blue4);
+    color: var(--blue);
     margin-left: 3rem;
     font-size: 1.8rem;
     flex: 1;
@@ -51,7 +50,7 @@ body {
 
 .navbar a {
     text-decoration: none;
-    color: var(--blue4);
+    color: var(--blue);
     font-size: 1.5rem;
     padding: 10px;
     transition: color 0.3s;
@@ -97,6 +96,8 @@ body {
     flex-direction: column-reverse;
     height: 75vh;
     width: 60vw;
+    padding: 0 20px;
+    overflow-y: auto;
 }
 
 .messages__item {
@@ -129,16 +130,16 @@ body {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom-left-radius: 20px;
-    background: var(--blue4);
-    color: var(--blue1);
+    background: var(--blue);
+    color: var(--grey);
 }
 
 .messages__item--operator {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    background: var(--blue2);
-    color: var(--blue4);
+    background: var(--purple);
+    color: white;
 }
 
 /* FOOTER */
@@ -161,9 +162,9 @@ body {
     padding: 20px 20px;
     margin-top: 20px;
     margin-bottom: 20px;
-    background: var(--blue4);
+    background: var(--blue);
     border-radius: 1rem;
-    box-shadow: var(--blue4shadow);
+    box-shadow: var(--blueshadow);
 }
 
 .chatbox__footer input {
@@ -172,14 +173,14 @@ body {
     padding: 10px 10px;
     border-radius: 0.7rem;
     text-align: left;
-    background-color: var(--blue1);
-    color: var(--blue4);
+    background-color: var(--grey);
+    color: var(--blue);
 }
 
 .chatbox__footer input::placeholder {
-    color: var(--blue3)
+    color: var(--blue)
 }
 
 .chatbox__send--footer {
-    color: var(--blue1);
+    color: var(--grey);
 }

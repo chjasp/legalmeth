@@ -1,4 +1,0 @@
-1. Search for nice theme
--- https://www.reddit.com/r/Battlefield/comments/nwkzl1/here_is_the_color_scheme_for_bf2042_extracted/
-2. Create chatbot UI
-3. Transform server code to Python endpoint

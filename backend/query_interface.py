@@ -11,7 +11,7 @@ instance_name = "legalm"
 
 DB_NAME = "pubmed"
 DB_USER = "postgres"
-DB_PASS = "bestday13"
+DB_PASS = "bdpass"
 DB_PORT = "5432"
 
 INSTANCE_CONNECTION_NAME = f"{project_id}:{region}:{instance_name}"
