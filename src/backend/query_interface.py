@@ -8,6 +8,7 @@ from sqlalchemy import text
 from transformers import AutoTokenizer, AutoModel
 from backend.db_interface import DatabaseInterface
 
+os.environ["TOKENIZERS_PARALLELISM"] = "true" 
 load_dotenv()
 
 PROJECT_ID = "steam-378309"

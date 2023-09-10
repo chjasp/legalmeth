@@ -1,0 +1,9 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'europe-west3-docker.pkg.dev/$PROJECT_ID/blue-repo/blue:$SHORT_SHA', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'europe-west3-docker.pkg.dev/$PROJECT_ID/blue-repo/blue:$SHORT_SHA']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run', 'deploy', 'blue', '--image', 'europe-west3-docker.pkg.dev/$PROJECT_ID/blue-repo/blue:$SHORT_SHA', '--platform', 'managed', '--region', 'europe-west3', '--allow-unauthenticated']
+images:
+- 'europe-west3-docker.pkg.dev/$PROJECT_ID/blue-repo/blue:$SHORT_SHA'

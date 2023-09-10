@@ -1,6 +1,14 @@
 # DB connection
 from google.cloud.sql.connector import Connector
 from sqlalchemy import create_engine, text
+from google.oauth2 import service_account
+import google.auth
+
+# Ensure the following is done at the beginning of your code or entry point of your application
+credentials = service_account.Credentials.from_service_account_file(
+    "./blue-pg-sa-creds.json",
+    scopes=["https://www.googleapis.com/auth/cloud-platform"]
+)
 
 class DatabaseInterface:
     def __init__(self, instance_connection_name, db_user, db_pass, db_name):
@@ -8,10 +16,11 @@ class DatabaseInterface:
         self.db_user = db_user
         self.db_pass = db_pass
         self.db_name = db_name
-        self.connector = Connector()
+        self.connector = Connector(credentials=credentials)
         self.pool = self.create_pool()
 
     def get_conn(self):
+
         conn = self.connector.connect(
             self.instance_connection_name,
             "pg8000",

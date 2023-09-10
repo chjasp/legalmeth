@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
 from backend.db_interface import DatabaseInterface
 from backend.query_interface import get_matches
-from backend.prompts import load_hlp_prompt
+from backend.prompt_templates import load_hlp_prompt
 
 import ssl
 print(ssl.OPENSSL_VERSION)
@@ -64,4 +64,4 @@ def predict():
     return jsonify(message)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
