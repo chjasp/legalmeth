@@ -1,9 +1,9 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'europe-west3-docker.pkg.dev/$PROJECT_ID/blue-repo/blue:$SHORT_SHA', '.']
+  args: ['build', '-t', 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$SHORT_SHA', '.']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'europe-west3-docker.pkg.dev/$PROJECT_ID/blue-repo/blue:$SHORT_SHA']
+  args: ['push', 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$SHORT_SHA']
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['run', 'deploy', 'blue', '--image', 'europe-west3-docker.pkg.dev/$PROJECT_ID/blue-repo/blue:$SHORT_SHA', '--platform', 'managed', '--region', 'europe-west3', '--allow-unauthenticated']
+  args: ['run', 'deploy', 'blue', '--image', 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$SHORT_SHA', '--platform', 'managed', '--region', 'europe-west3', '--allow-unauthenticated', '--update-secrets', 'INSTANCE_NAME=projects/steam-378309/secrets/INSTANCE_NAME/versions/latest,DB_NAME=projects/steam-378309/secrets/DB_NAME/versions/latest,DB_USER=projects/steam-378309/secrets/DB_USER/versions/latest,DB_PASS=projects/steam-378309/secrets/DB_PASS/versions/latest,DB_PORT=projects/steam-378309/secrets/DB_PORT/versions/latest']
 images:
-- 'europe-west3-docker.pkg.dev/$PROJECT_ID/blue-repo/blue:$SHORT_SHA'
+- 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$SHORT_SHA'

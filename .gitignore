@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+blue-pg-sa-creds.json
+
 # C extensions
 *.so
 
