@@ -12,8 +12,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the content of the local src directory to the working directoryyy
 COPY src/ .
-COPY .env .env
-COPY blue-pg-sa-creds.json blue-pg-sa-creds.json
 
 # Specify the command to run on container start
 CMD ["python", "./app.py"]
