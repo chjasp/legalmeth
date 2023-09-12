@@ -1,6 +1,8 @@
 # Use an official Python image as the base image
 FROM python:3.11-slim
 
+ENV ENV cloud
+
 # Set the working directory in the container
 WORKDIR /app
 
@@ -15,3 +17,5 @@ COPY src/ .
 
 # Specify the command to run on container start
 CMD ["python", "./app.py"]
+
+EXPOSE 8080

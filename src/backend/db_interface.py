@@ -5,8 +5,6 @@ from sqlalchemy import create_engine, text
 from google.oauth2 import service_account
 import google.auth
 
-
-
 # Determine environment
 ENVIRONMENT = os.getenv("ENV", "local")
 
