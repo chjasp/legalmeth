@@ -1,9 +1,28 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$SHORT_SHA', '.']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$SHORT_SHA']
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['run', 'deploy', 'blue', '--image', 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$SHORT_SHA', '--platform', 'managed', '--region', 'europe-west3', '--allow-unauthenticated', '--update-secrets', 'INSTANCE_NAME=projects/steam-378309/secrets/INSTANCE_NAME/versions/latest,DB_NAME=projects/steam-378309/secrets/DB_NAME/versions/latest,DB_USER=projects/steam-378309/secrets/DB_USER/versions/latest,DB_PASS=projects/steam-378309/secrets/DB_PASS/versions/latest,DB_PORT=projects/steam-378309/secrets/DB_PORT/versions/latest']
+- id: 'Building Image'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$_RELEASE_VERSION', '.']
+  secretEnv: ['DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT', 'INSTANCE_NAME']
+
+- id: 'Push Image'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$_RELEASE_VERSION']
+  secretEnv: ['DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT', 'INSTANCE_NAME']
+
+- id: 'Deploy new Cloud Run Revision'
+  name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run', 'deploy', 'blue', '--image', 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$_RELEASE_VERSION', '--platform', 'managed', '--region', 'europe-west3', '--allow-unauthenticated']
+
 images:
-- 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$SHORT_SHA'
+- 'europe-west3-docker.pkg.dev/steam-378309/blue-repo/blue:$_RELEASE_VERSION'
+
+secrets:
+- secretEnv:
+    DB_NAME: 'sm://$PROJECT_ID/DB_NAME'
+    DB_USER: 'sm://$PROJECT_ID/DB_USER'
+    DB_PASS: 'sm://$PROJECT_ID/DB_PASS'
+    DB_PORT: 'sm://$PROJECT_ID/DB_PORT'
+    INSTANCE_NAME: 'sm://$PROJECT_ID/INSTANCE_NAME'
+
+substitutions:
+    _RELEASE_VERSION: v0.0.0
