@@ -2,12 +2,12 @@ steps:
 - id: 'Building Image'
   name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION', '.']
-  secretEnv: ['DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT', 'INSTANCE_NAME']
+  secretEnv: ['OPENAI_API_KEY', 'DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT', 'INSTANCE_NAME']
 
 - id: 'Push Image'
   name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION']
-  secretEnv: ['DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT', 'INSTANCE_NAME']
+  secretEnv: ['OPENAI_API_KEY', 'DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT', 'INSTANCE_NAME']
 
 - id: 'Deploy new Cloud Run Revision'
   name: 'gcr.io/cloud-builders/gcloud'
@@ -16,13 +16,20 @@ steps:
 images:
 - 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION'
 
-secrets:
-- secretEnv:
-    DB_NAME: 'sm://$_PROJECT_ID/DB_NAME'
-    DB_USER: 'sm://$_PROJECT_ID/DB_USER'
-    DB_PASS: 'sm://$_PROJECT_ID/DB_PASS'
-    DB_PORT: 'sm://$_PROJECT_ID/DB_PORT'
-    INSTANCE_NAME: 'sm://$_PROJECT_ID/INSTANCE_NAME'
+availableSecrets:
+  secretManager:
+  - versionName: projects/$_PROJECT_ID/secrets/OPENAI_API_KEY/versions/latest
+    env: OPENAI_API_KEY
+  - versionName: projects/$_PROJECT_ID/secrets/DB_NAME/versions/latest
+    env: DB_NAME
+  - versionName: projects/$_PROJECT_ID/secrets/DB_USER/versions/latest
+    env: DB_USER
+  - versionName: projects/$_PROJECT_ID/secrets/DB_PASS/versions/latest
+    env: DB_PASS
+  - versionName: projects/$_PROJECT_ID/secrets/DB_PORT/versions/latest
+    env: DB_PORT
+  - versionName: projects/$_PROJECT_ID/secrets/INSTANCE_NAME/versions/latest
+    env: INSTANCE_NAME 
 
 substitutions:
     _RELEASE_VERSION: v0.0.0
