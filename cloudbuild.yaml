@@ -13,6 +13,36 @@ steps:
   name: 'gcr.io/cloud-builders/gcloud'
   args: ['run', 'deploy', 'blue', '--image', 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION', '--platform', 'managed', '--region', 'europe-west3', '--allow-unauthenticated']
 
+- 
+
+- id: "Deploy to Cloud Run"
+  name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - 'run'
+  - 'deploy'
+  - '$_CR_SERVICE_NAME'
+  - '--image'
+  - 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION'
+  - '--project'
+  - '$_CR_PROJECT_ID'
+  - '--region'
+  - 'europe-west3'
+  - '--platform'
+  - 'managed'
+  - '--min-instances'
+  - '0'
+  - '--max-instances'
+  - '2'
+  - '--cpu'
+  - '4'
+  - '--memory'
+  - '4Gi'
+  - '--service-account'
+  - 'service-account@projectabc.iam.gserviceaccount.com'
+  - '--allow-unauthenticated'
+
+
+
 images:
 - 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION'
 
