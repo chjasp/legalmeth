@@ -11,7 +11,7 @@ from backend.db_interface import DatabaseInterface
 os.environ["TOKENIZERS_PARALLELISM"] = "true" 
 load_dotenv()
 
-PROJECT_ID = "steam-378309"
+PROJECT_ID = os.environ.get("PROJECT_ID")
 REGION = "europe-west3"
 INSTANCE_NAME = os.environ.get("INSTANCE_NAME")
 
