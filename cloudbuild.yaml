@@ -38,7 +38,7 @@ steps:
   - '--memory'
   - '4Gi'
   - '--service-account'
-  - 'service-account@projectabc.iam.gserviceaccount.com'
+  - 'blue-pg@steam-378309.iam.gserviceaccount.com'
   - '--allow-unauthenticated'
 
 
