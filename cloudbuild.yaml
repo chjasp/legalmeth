@@ -18,7 +18,7 @@ steps:
   - '--image'
   - 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION'
   - '--project'
-  - '$_CR_PROJECT_ID'
+  - '$_PROJECT_ID'
   - '--region'
   - 'europe-west3'
   - '--platform'
