@@ -1,4 +1,16 @@
 steps:
+- id: "CHECK VARS"
+  name: "gcr.io/cloud-builders/gcloud"
+  entrypoint: 'bash'
+  args: 
+  - -c
+  - |
+    echo $'\n  OPENAI_API_KEY: '$$OPENAI_API_KEY
+    echo $'\n  OPENAI_API_KEY: $$OPENAI_API_KEY'
+    echo $'\n  DB_NAME: '$$DB_NAME
+    echo $'\n  DB_NAME: $$DB_NAME'
+  secretEnv: ['OPENAI_API_KEY','DB_NAME']
+
 
   - id: 'Building Image'
     name: 'gcr.io/cloud-builders/docker'
@@ -17,7 +29,6 @@ steps:
   - id: "Deploy to Cloud Run"
     name: 'gcr.io/cloud-builders/gcloud'
     args:
-      - '-c'
       - 'run'
       - 'deploy'
       - '$_CR_SERVICE_NAME'
@@ -41,7 +52,7 @@ steps:
       - 'blue-pg@steam-378309.iam.gserviceaccount.com'
       - '--allow-unauthenticated'
       - '--set-env-vars'
-      - 'OPENAI_API_KEY=$$OPENAI_API_KEY,DB_NAME=$$DB_NAME,DB_USER=$$DB_USER,DB_PASS=$$DB_PASS,DB_PORT=$$DB_PORT, INSTANCE_NAME=$$INSTANCE_NAME'
+      - 'OPENAI_API_KEY=OPENAI_API_KEY,DB_NAME=DB_NAME,DB_USER=DB_USER,DB_PASS=DB_PASS,DB_PORT=DB_PORT, INSTANCE_NAME=INSTANCE_NAME'
     secretEnv: ['OPENAI_API_KEY', 'DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT', 'INSTANCE_NAME']
 
 images:
