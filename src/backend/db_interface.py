@@ -8,19 +8,25 @@ import google.auth
 # Determine environment
 ENVIRONMENT = os.getenv("ENV", "local")
 
+
 # Authentication based on environment
 if ENVIRONMENT == "local":
     # Local authentication using service account JSON
     credentials = service_account.Credentials.from_service_account_file(
-        "./blue-pg-sa-creds.json",
+        "../../blue-pg-sa-creds.json",
         scopes=["https://www.googleapis.com/auth/cloud-platform"]
     )
+    print("orig")
+    print(type(credentials))
+    print(credentials)
 else:
     # Production authentication (Cloud Run, etc.)
-    _, credentials = google.auth.default(
+    credentials, project_id = google.auth.default(
         scopes=["https://www.googleapis.com/auth/cloud-platform"]
     )
-
+    print("next")
+    print(type(credentials))
+    print(credentials)
 
 class DatabaseInterface:
     def __init__(self, instance_connection_name, db_user, db_pass, db_name):
