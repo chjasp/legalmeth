@@ -1,15 +1,15 @@
 steps:
-- id: "CHECK VARS"
-  name: "gcr.io/cloud-builders/gcloud"
-  entrypoint: 'bash'
-  args: 
-  - -c
-  - |
-    echo $'\n  OPENAI_API_KEY: '$$OPENAI_API_KEY
-    echo $'\n  OPENAI_API_KEY: $$OPENAI_API_KEY'
-    echo $'\n  DB_NAME: '$$DB_NAME
-    echo $'\n  DB_NAME: $$DB_NAME'
-  secretEnv: ['OPENAI_API_KEY','DB_NAME']
+  - id: "CHECK VARS"
+    name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: 'bash'
+    args: 
+    - -c
+    - |
+      echo $'\n  OPENAI_API_KEY: '$$OPENAI_API_KEY
+      echo $'\n  OPENAI_API_KEY: $$OPENAI_API_KEY'
+      echo $'\n  DB_NAME: '$$DB_NAME
+      echo $'\n  DB_NAME: $$DB_NAME'
+    secretEnv: ['OPENAI_API_KEY','DB_NAME']
 
 
   - id: 'Building Image'
