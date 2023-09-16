@@ -3,14 +3,13 @@ steps:
     name: "gcr.io/cloud-builders/gcloud"
     entrypoint: 'bash'
     args: 
-    - -c
-    - |
-      echo $'\n  OPENAI_API_KEY: '$$OPENAI_API_KEY
-      echo $'\n  OPENAI_API_KEY: $$OPENAI_API_KEY'
-      echo $'\n  DB_NAME: '$$DB_NAME
-      echo $'\n  DB_NAME: $$DB_NAME'
+      - -c
+      - |
+        echo $'\n  OPENAI_API_KEY: '$$OPENAI_API_KEY
+        echo $'\n  OPENAI_API_KEY: $$OPENAI_API_KEY'
+        echo $'\n  DB_NAME: '$$DB_NAME
+        echo $'\n  DB_NAME: $$DB_NAME'
     secretEnv: ['OPENAI_API_KEY','DB_NAME']
-
 
   - id: 'Building Image'
     name: 'gcr.io/cloud-builders/docker'
@@ -28,31 +27,22 @@ steps:
 
   - id: "Deploy to Cloud Run"
     name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
     args:
-      - 'run'
-      - 'deploy'
-      - '$_CR_SERVICE_NAME'
-      - '--image'
-      - 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION'
-      - '--project'
-      - '$_PROJECT_ID'
-      - '--region'
-      - 'europe-west3'
-      - '--platform'
-      - 'managed'
-      - '--min-instances'
-      - '0'
-      - '--max-instances'
-      - '2'
-      - '--cpu'
-      - '4'
-      - '--memory'
-      - '4Gi'
-      - '--service-account'
-      - 'blue-pg@steam-378309.iam.gserviceaccount.com'
-      - '--allow-unauthenticated'
-      - '--set-env-vars'
-      - 'OPENAI_API_KEY=OPENAI_API_KEY,DB_NAME=DB_NAME,DB_USER=DB_USER,DB_PASS=DB_PASS,DB_PORT=DB_PORT, INSTANCE_NAME=INSTANCE_NAME'
+      - -c
+      - |
+        gcloud run deploy $_CR_SERVICE_NAME \
+        --image europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION \
+        --project $_PROJECT_ID \
+        --region europe-west3 \
+        --platform managed \
+        --min-instances 0 \
+        --max-instances 2 \
+        --cpu 4 \
+        --memory 4Gi \
+        --service-account blue-pg@steam-378309.iam.gserviceaccount.com \
+        --allow-unauthenticated \
+        --set-env-vars OPENAI_API_KEY=$$OPENAI_API_KEY,DB_NAME=$$DB_NAME,DB_USER=$$DB_USER,DB_PASS=$$DB_PASS,DB_PORT=$$DB_PORT,INSTANCE_NAME=$$INSTANCE_NAME
     secretEnv: ['OPENAI_API_KEY', 'DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT', 'INSTANCE_NAME']
 
 images:
