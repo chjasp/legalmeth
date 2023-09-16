@@ -8,6 +8,8 @@ import google.auth
 # Determine environment
 ENVIRONMENT = os.environ.get("ENV", "local")
 
+print("ENV", ENVIRONMENT)
+
 # Authentication based on environment
 if ENVIRONMENT == "local":
     # Local authentication using service account JSON
