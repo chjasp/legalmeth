@@ -6,8 +6,7 @@ from google.oauth2 import service_account
 import google.auth
 
 # Determine environment
-ENVIRONMENT = os.getenv("ENV", "local")
-
+ENVIRONMENT = os.environ.get("ENV", "local")
 
 # Authentication based on environment
 if ENVIRONMENT == "local":

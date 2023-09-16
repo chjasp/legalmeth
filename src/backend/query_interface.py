@@ -12,13 +12,17 @@ os.environ["TOKENIZERS_PARALLELISM"] = "true"
 load_dotenv()
 
 PROJECT_ID = os.environ.get("PROJECT_ID")
-REGION = "europe-west3"
+REGION = os.environ.get("REGION")
 INSTANCE_NAME = os.environ.get("INSTANCE_NAME")
+
+print("INSTANCE NAME ", INSTANCE_NAME)
 
 DB_NAME = os.environ.get("DB_NAME")
 DB_USER = os.environ.get("DB_USER")
 DB_PASS = os.environ.get("DB_PASS")
 DB_PORT = os.environ.get("DB_PORT")
+
+print("DB_PORT ", DB_PORT)
 
 INSTANCE_CONNECTION_NAME = f"{PROJECT_ID}:{REGION}:{INSTANCE_NAME}"
 print(f"Your instance connection name is: {INSTANCE_CONNECTION_NAME}")

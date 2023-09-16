@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
-print(OPENAI_API_KEY)
+print("OAIK: ", OPENAI_API_KEY)
 
 PROJECT_ID = os.environ.get("PROJECT_ID")
 REGION = os.environ.get("REGION")
