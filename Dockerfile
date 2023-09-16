@@ -2,6 +2,7 @@
 FROM python:3.11-slim
 
 ENV ENV cloud
+ENV REGION europe-west3
 ENV PROJECT_ID steam-378309
 
 # Set the working directory in the container

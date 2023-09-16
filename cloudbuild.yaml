@@ -1,57 +1,64 @@
 steps:
-- id: 'Building Image'
-  name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION', '.']
-  secretEnv: ['OPENAI_API_KEY', 'DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT', 'INSTANCE_NAME']
 
-- id: 'Push Image'
-  name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION']
-  secretEnv: ['OPENAI_API_KEY', 'DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT', 'INSTANCE_NAME']
+  - id: 'Building Image'
+    name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION'
+      - '.'
 
-- id: "Deploy to Cloud Run"
-  name: 'gcr.io/cloud-builders/gcloud'
-  args:
-  - 'run'
-  - 'deploy'
-  - '$_CR_SERVICE_NAME'
-  - '--image'
-  - 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION'
-  - '--project'
-  - '$_PROJECT_ID'
-  - '--region'
-  - 'europe-west3'
-  - '--platform'
-  - 'managed'
-  - '--min-instances'
-  - '0'
-  - '--max-instances'
-  - '2'
-  - '--cpu'
-  - '4'
-  - '--memory'
-  - '4Gi'
-  - '--service-account'
-  - 'blue-pg@steam-378309.iam.gserviceaccount.com'
-  - '--allow-unauthenticated'
+  - id: 'Push Image'
+    name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION'
+
+  - id: "Deploy to Cloud Run"
+    name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - '$_CR_SERVICE_NAME'
+      - '--image'
+      - 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION'
+      - '--project'
+      - '$_PROJECT_ID'
+      - '--region'
+      - 'europe-west3'
+      - '--platform'
+      - 'managed'
+      - '--min-instances'
+      - '0'
+      - '--max-instances'
+      - '2'
+      - '--cpu'
+      - '4'
+      - '--memory'
+      - '4Gi'
+      - '--service-account'
+      - 'blue-pg@steam-378309.iam.gserviceaccount.com'
+      - '--allow-unauthenticated'
+      - '--set-env-vars'
+      - 'OPENAI_API_KEY=$OPENAI_API_KEY,DB_NAME=$DB_NAME,DB_USER=$DB_USER,DB_PASS=$DB_PASS,DB_PORT=$DB_PORT, INSTANCE_NAME=$INSTANCE_NAME'
 
 images:
-- 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION'
+  - 'europe-west3-docker.pkg.dev/$_PROJECT_ID/blue-repo/blue:$_RELEASE_VERSION'
 
 availableSecrets:
   secretManager:
-  - versionName: projects/$_PROJECT_ID/secrets/OPENAI_API_KEY/versions/latest
-    env: OPENAI_API_KEY
-  - versionName: projects/$_PROJECT_ID/secrets/DB_NAME/versions/latest
-    env: DB_NAME
-  - versionName: projects/$_PROJECT_ID/secrets/DB_USER/versions/latest
-    env: DB_USER
-  - versionName: projects/$_PROJECT_ID/secrets/DB_PASS/versions/latest
-    env: DB_PASS
-  - versionName: projects/$_PROJECT_ID/secrets/DB_PORT/versions/latest
-    env: DB_PORT
-  - versionName: projects/$_PROJECT_ID/secrets/INSTANCE_NAME/versions/latest
-    env: INSTANCE_NAME 
+    - versionName: projects/$_PROJECT_ID/secrets/OPENAI_API_KEY/versions/latest
+      env: OPENAI_API_KEY
+    - versionName: projects/$_PROJECT_ID/secrets/DB_NAME/versions/latest
+      env: DB_NAME
+    - versionName: projects/$_PROJECT_ID/secrets/DB_USER/versions/latest
+      env: DB_USER
+    - versionName: projects/$_PROJECT_ID/secrets/DB_PASS/versions/latest
+      env: DB_PASS
+    - versionName: projects/$_PROJECT_ID/secrets/DB_PORT/versions/latest
+      env: DB_PORT
+    - versionName: projects/$_PROJECT_ID/secrets/INSTANCE_NAME/versions/latest
+      env: INSTANCE_NAME
 
 substitutions:
     _RELEASE_VERSION: v0.0.0
