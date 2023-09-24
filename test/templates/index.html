@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+         data-client_id=""
+         data-callback="onSignIn">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+  <script>
+    function onSignIn(response) {
+        console.log("RESPONSE")
+        console.log(response)
+        const id_token = response.credential;
+
+        fetch("/verify", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id_token })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.access_granted) {
+                console.log("access granted")
+            } else {
+                console.log("no access")
+            }
+        })
+        .catch((error) => {
+            console.log("Error: ", error);
+        })
+      
+        // Send the ID token to the server for verification
+        // Your existing fetch code
+      }
+
+  </script>
+</body>
+</html>

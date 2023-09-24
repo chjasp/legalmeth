@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign In with Google and Check Permissions</title>
+  <script src="https://apis.google.com/js/api.js" async defer onload="handleClientLoad"></script>
+  <script>
+    function handleClientLoad() {
+      console.log("test");
+      initGoogleApi();
+    }
+
+    function initGoogleApi() {
+      gapi.load('client:auth2', () => {
+        gapi.client.init({
+          clientId: '949011922332-j34lp2m9557sq67l40fqdisrih96i46t.apps.googleusercontent.com',
+          scope: 'https://www.googleapis.com/auth/cloud-platform.read-only',
+        }).then(() => {
+          // Listen for sign-in state changes.
+          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+          // Handle the initial sign-in state.
+          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        });
+      });
+    }
+
+    function updateSigninStatus(isSignedIn) {
+      if (isSignedIn) {
+        // User is signed in, get the access token
+        const accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
+        console.log('Access Token:', accessToken);
+
+        // Call the checkPermissions function with the access token
+        checkPermissions(accessToken);
+      } else {
+        // User is not signed in, show the sign-in button
+        gapi.auth2.getAuthInstance().signIn();
+      }
+    }
+
+    async function checkPermissions(token) {
+      // Your checkPermissions function implementation
+      console.log("checkpermissions")
+    }
+  </script>
+</head>
+<body>
+  <!-- Your page content -->
+</body>
+</html>
